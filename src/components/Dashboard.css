@@ -1,0 +1,18 @@
+.dashboard {
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 24px;
+}
+
+.dashboard h2 {
+  font-size: 32px;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.summary-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}

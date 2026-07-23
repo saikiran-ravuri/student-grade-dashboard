@@ -1,17 +1,16 @@
 .header {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
+  text-align: center;
+  padding: 64px 20px 48px;
 }
 
 .header h1 {
-  font-size: 40px;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 12px;
 }
 
 .header p {
-  color: #6b7280;
-  font-size: 18px;
+  font-size: 1.1rem;
+  color: #64748b;
 }

@@ -1,0 +1,59 @@
+.student-row {
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    padding: 22px 24px;
+    box-shadow: 0 8px 24px rgba(15,23,42,.05);
+    transition: .25s;
+}
+
+.student-row:hover{
+    transform:translateY(-4px);
+    box-shadow:0 18px 36px rgba(15,23,42,.12);
+}
+
+.student-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
+}
+
+.student-header h3{
+    color:#111827;
+    font-size:1.25rem;
+    font-weight:700;
+}
+
+.student-info{
+    display:flex;
+    justify-content:space-between;
+    color:#64748b;
+}
+
+.grade-badge{
+    padding:7px 16px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:.85rem;
+}
+
+.excellent{
+    background:#dcfce7;
+    color:#166534;
+}
+
+.good{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.average{
+    background:#fef3c7;
+    color:#92400e;
+}
+
+.poor{
+    background:#fee2e2;
+    color:#b91c1c;
+}

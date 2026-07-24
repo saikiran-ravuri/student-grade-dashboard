@@ -2,10 +2,20 @@ import "./Header.css";
 
 function Header() {
   return (
-    <div className="header">
+    <header className="dashboard-header">
+      <div className="header-badge">
+        <span className="badge-dot" aria-hidden="true" />
+        React Dashboard
+      </div>
+
       <h1>Student Grade Dashboard</h1>
-      <p>Academic Performance Dashboard</p>
-    </div>
+
+      <p>
+        Manage, track and analyze student academic performance
+        through a clean, modern dashboard with powerful CRUD
+        operations and real-time statistics.
+      </p>
+    </header>
   );
 }
 

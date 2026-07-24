@@ -1,21 +1,29 @@
 .student-form-section {
-  margin-bottom: 56px;
   padding: 28px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+  border: 1px solid #e8edf5;
+  border-radius: 22px;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
 }
 
 .student-form-section h2 {
-  margin-bottom: 28px;
-  color: #0f172a;
+  margin-bottom: 24px;
+  color: #172033;
+  font-size: 2rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
 }
 
 .student-form {
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 20px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
 }
 
 .form-group {
@@ -25,78 +33,95 @@
 }
 
 .form-group label {
-  font-size: 0.95rem;
-  font-weight: 600;
   color: #334155;
+  font-size: 0.92rem;
+  font-weight: 650;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
   height: 48px;
-  padding: 0 16px;
-  font: inherit;
-  background: #ffffff;
-  border: 1px solid #cbd5e1;
+  padding: 0 14px;
+  color: #1e293b;
+  background: #f8fafc;
+  border: 1px solid #dbe3ef;
   border-radius: 12px;
-  outline: none;
-  transition:
-    border-color 0.2s ease,
-    box-shadow 0.2s ease;
+  font: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  background: #ffffff;
+  border-color: #c3cfdf;
 }
 
 .form-group input:focus,
 .form-group select:focus {
+  background: #ffffff;
   border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  outline: none;
 }
 
-.form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
 }
 
-.student-form button {
-  height: 50px;
+.primary-btn,
+.secondary-btn {
+  height: 48px;
+  padding: 0 22px;
   border: none;
   border-radius: 12px;
-  background: #2563eb;
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.15s ease;
+  transition: all 0.2s ease;
 }
 
-.student-form button:hover {
+.primary-btn {
+  color: #fff;
+  background: #2563eb;
+}
+
+.primary-btn:hover {
   background: #1d4ed8;
+  transform: translateY(-2px);
 }
 
-.student-form button:active {
-  transform: scale(0.98);
+.secondary-btn {
+  color: #334155;
+  background: #f1f5f9;
 }
 
-.error-text {
-  margin-top: 4px;
-  color: #dc2626;
-  font-size: 0.85rem;
-  font-weight: 500;
+.secondary-btn:hover {
+  background: #e2e8f0;
 }
 
-.input-error {
-  border-color: #dc2626 !important;
-  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12) !important;
-}
-
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .student-form-section {
     padding: 22px;
   }
 
   .form-row {
     grid-template-columns: 1fr;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .primary-btn,
+  .secondary-btn {
+    width: 100%;
   }
 }

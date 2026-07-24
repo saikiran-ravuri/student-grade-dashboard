@@ -1,46 +1,56 @@
 import "./StudentRow.css";
 
-function StudentRow({ student }) {
+function getInitials(name) {
+  return name
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .slice(0, 2)
+    .toUpperCase();
+}
 
-    const getBadgeColor = (marks) => {
-
-        if (marks >= 90) return "excellent";
-
-        if (marks >= 80) return "good";
-
-        if (marks >= 70) return "average";
-
-        return "poor";
-    };
-
-    return (
-
-        <div className="student-row">
-
-            <div className="student-header">
-
-                <h3>{student.name}</h3>
-
-                <span
-                    className={`grade-badge ${getBadgeColor(student.marks)}`}
-                >
-                    {student.grade}
-                </span>
-
-            </div>
-
-            <div className="student-info">
-
-                <span>{student.subject}</span>
-
-                <span>{student.marks} Marks</span>
-
-            </div>
-
+function StudentRow({ student, onEdit, onDelete }) {
+  return (
+    <article className="student-card">
+      <div className="student-left">
+        <div className="student-avatar">
+          {getInitials(student.name)}
         </div>
 
-    );
+        <div className="student-info">
+          <h3>{student.name}</h3>
 
+          <p>{student.subject}</p>
+
+          <div className="student-meta">
+            <span className="marks">
+              Marks <strong>{student.marks}</strong>
+            </span>
+
+            <span className={`grade grade-${student.grade.replace("+", "plus")}`}>
+              {student.grade}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div className="student-actions">
+        <button
+          className="edit-btn"
+          onClick={() => onEdit(student)}
+        >
+          Edit
+        </button>
+
+        <button
+          className="delete-btn"
+          onClick={() => onDelete(student)}
+        >
+          Delete
+        </button>
+      </div>
+    </article>
+  );
 }
 
 export default StudentRow;

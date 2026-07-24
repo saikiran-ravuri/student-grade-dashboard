@@ -1,16 +1,64 @@
-.header {
+.dashboard-header {
+  width: min(900px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 56px 0 64px;
   text-align: center;
-  padding: 64px 20px 48px;
 }
 
-.header h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  color: #1e293b;
-  margin-bottom: 12px;
+.header-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  padding: 8px 16px;
+  color: #2563eb;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.header p {
-  font-size: 1.1rem;
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  background: #2563eb;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: #172033;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.dashboard-header p {
+  max-width: 720px;
+  margin: 20px auto 0;
   color: #64748b;
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+@media (max-width: 720px) {
+  .dashboard-header {
+    width: min(100% - 28px, 900px);
+    padding: 40px 0 48px;
+  }
+
+  .dashboard-header h1 {
+    font-size: 2.35rem;
+  }
+
+  .dashboard-header p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
 }

@@ -1,11 +1,52 @@
 import "./SummaryCard.css";
 
+function getIcon(title) {
+  switch (title) {
+    case "Total Students":
+      return "👥";
+    case "Average Marks":
+      return "📈";
+    case "Top Grade":
+      return "🏆";
+    case "Subjects":
+      return "📚";
+    default:
+      return "📊";
+  }
+}
+
+function getAccent(title) {
+  switch (title) {
+    case "Total Students":
+      return "blue";
+    case "Average Marks":
+      return "green";
+    case "Top Grade":
+      return "orange";
+    case "Subjects":
+      return "purple";
+    default:
+      return "blue";
+  }
+}
+
 function SummaryCard({ title, value }) {
   return (
-    <div className="summary-card">
-      <h3>{title}</h3>
-      <p>{value}</p>
-    </div>
+    <article className={`summary-card ${getAccent(title)}`}>
+      <div className="summary-top">
+        <div className="summary-icon">{getIcon(title)}</div>
+
+        <div>
+          <p className="summary-title">{title}</p>
+          <h3 className="summary-value">{value}</h3>
+        </div>
+      </div>
+
+      <div className="summary-footer">
+        <span className="summary-indicator"></span>
+        Live Statistics
+      </div>
+    </article>
   );
 }
 

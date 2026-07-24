@@ -1,66 +1,49 @@
-import { useEffect } from "react";
-
 import "./ConfirmModal.css";
 
-function ConfirmModal({ isOpen, title, message, onCancel, onConfirm }) {
-  useEffect(() => {
-    if (!isOpen) {
-      return undefined;
-    }
-
-    function handleKeyDown(event) {
-      if (event.key === "Escape") {
-        onCancel();
-      }
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-
-      document.body.style.overflow = "";
-    };
-  }, [isOpen, onCancel]);
-
+function ConfirmModal({
+  isOpen,
+  title,
+  message,
+  onCancel,
+  onConfirm,
+}) {
   if (!isOpen) {
     return null;
-  }
-
-  function handleOverlayClick(event) {
-    if (event.target === event.currentTarget) {
-      onCancel();
-    }
   }
 
   return (
     <div
       className="modal-overlay"
-      role="presentation"
-      onMouseDown={handleOverlayClick}
+      onClick={onCancel}
     >
-      <section
-        className="modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="confirm-modal-title"
-        aria-describedby="confirm-modal-message"
+      <div
+        className="confirm-modal"
+        onClick={(event) => event.stopPropagation()}
       >
-        <h2 id="confirm-modal-title">{title}</h2>
+        <div className="modal-icon">
+          ⚠️
+        </div>
 
-        <p id="confirm-modal-message">{message}</p>
+        <h2>{title}</h2>
+
+        <p>{message}</p>
 
         <div className="modal-actions">
-          <button type="button" onClick={onCancel}>
+          <button
+            className="cancel-btn"
+            onClick={onCancel}
+          >
             Cancel
           </button>
 
-          <button type="button" onClick={onConfirm}>
+          <button
+            className="delete-btn"
+            onClick={onConfirm}
+          >
             Delete
           </button>
         </div>
-      </section>
+      </div>
     </div>
   );
 }

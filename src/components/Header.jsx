@@ -4,7 +4,7 @@ function Header() {
   return (
     <header className="dashboard-header">
       <div className="header-badge">
-        <span className="badge-dot" aria-hidden="true" />
+        <span className="badge-dot"></span>
         React Dashboard
       </div>
 

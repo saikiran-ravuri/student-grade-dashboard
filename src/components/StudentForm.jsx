@@ -2,21 +2,13 @@ import { useState } from "react";
 
 import "./StudentForm.css";
 
-function createInitialForm(editingStudent) {
-  if (editingStudent) {
-    return {
-      name: editingStudent.name,
-      subject: editingStudent.subject,
-      marks: String(editingStudent.marks),
-      grade: editingStudent.grade,
-    };
-  }
-
+function createInitialForm() {
   return {
+    id: crypto.randomUUID(),
     name: "",
     subject: "",
     marks: "",
-    grade: "",
+    grade: "A",
   };
 }
 
@@ -27,7 +19,12 @@ function StudentForm({
   onCancelEdit,
 }) {
   const [formData, setFormData] = useState(() =>
-    createInitialForm(editingStudent)
+    editingStudent
+      ? {
+          ...editingStudent,
+          marks: String(editingStudent.marks),
+        }
+      : createInitialForm(),
   );
 
   const [errors, setErrors] = useState({});
@@ -35,249 +32,161 @@ function StudentForm({
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setFormData((currentFormData) => ({
-      ...currentFormData,
+    setFormData((current) => ({
+      ...current,
       [name]: value,
     }));
 
-    setErrors((currentErrors) => ({
-      ...currentErrors,
+    setErrors((current) => ({
+      ...current,
       [name]: "",
     }));
   }
 
   function validateForm() {
     const validationErrors = {};
-    const normalizedName = formData.name.trim();
-    const normalizedSubject = formData.subject.trim();
-    const numericMarks = Number(formData.marks);
 
-    if (!normalizedName) {
+    if (!formData.name.trim()) {
       validationErrors.name = "Student name is required.";
-    } else if (normalizedName.length < 2) {
-      validationErrors.name =
-        "Student name must contain at least 2 characters.";
     }
 
-    if (!normalizedSubject) {
+    if (!formData.subject.trim()) {
       validationErrors.subject = "Subject is required.";
     }
 
     if (formData.marks === "") {
       validationErrors.marks = "Marks are required.";
-    } else if (
-      Number.isNaN(numericMarks) ||
-      numericMarks < 0 ||
-      numericMarks > 100
-    ) {
-      validationErrors.marks =
-        "Marks must be between 0 and 100.";
+    } else {
+      const numericMarks = Number(formData.marks);
+
+      if (
+        Number.isNaN(numericMarks) ||
+        numericMarks < 0 ||
+        numericMarks > 100
+      ) {
+        validationErrors.marks = "Marks must be between 0 and 100.";
+      }
     }
 
-    if (!formData.grade) {
-      validationErrors.grade = "Grade is required.";
-    }
+    setErrors(validationErrors);
 
-    return validationErrors;
+    return Object.keys(validationErrors).length === 0;
   }
 
   function resetForm() {
-    setFormData(createInitialForm(null));
+    setFormData(createInitialForm());
     setErrors({});
   }
 
   function handleSubmit(event) {
     event.preventDefault();
 
-    const validationErrors = validateForm();
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    if (!validateForm()) {
       return;
     }
 
-    const studentData = {
-      name: formData.name.trim(),
-      subject: formData.subject.trim(),
+    const student = {
+      ...formData,
       marks: Number(formData.marks),
-      grade: formData.grade,
     };
 
     if (editingStudent) {
-      onUpdateStudent({
-        ...studentData,
-        id: editingStudent.id,
-      });
+      onUpdateStudent(student);
     } else {
-      onAddStudent({
-        ...studentData,
-        id: crypto.randomUUID(),
-      });
-
-      resetForm();
+      onAddStudent(student);
     }
-  }
 
-  function handleCancel() {
     resetForm();
-    onCancelEdit();
   }
 
   return (
     <section className="student-form-section">
-      <h2>
-        {editingStudent ? "Update Student" : "Add Student"}
-      </h2>
+      <h2>{editingStudent ? "Edit Student" : "Add New Student"}</h2>
 
-      <form
-        className="student-form"
-        onSubmit={handleSubmit}
-        noValidate
-      >
+      <form className="student-form" onSubmit={handleSubmit} noValidate>
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="student-name">
-              Student Name
-            </label>
+            <label htmlFor="name">Student Name</label>
 
             <input
-              id="student-name"
-              name="name"
+              id="name"
               type="text"
+              name="name"
               placeholder="Enter student name"
               value={formData.name}
               onChange={handleChange}
-              aria-invalid={Boolean(errors.name)}
-              aria-describedby={
-                errors.name ? "student-name-error" : undefined
-              }
             />
 
-            {errors.name && (
-              <span
-                id="student-name-error"
-                className="form-error"
-              >
-                {errors.name}
-              </span>
-            )}
+            {errors.name && <p className="form-error">{errors.name}</p>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="student-subject">
-              Subject
-            </label>
+            <label htmlFor="subject">Subject</label>
 
             <input
-              id="student-subject"
-              name="subject"
+              id="subject"
               type="text"
+              name="subject"
               placeholder="Enter subject"
               value={formData.subject}
               onChange={handleChange}
-              aria-invalid={Boolean(errors.subject)}
-              aria-describedby={
-                errors.subject
-                  ? "student-subject-error"
-                  : undefined
-              }
             />
 
-            {errors.subject && (
-              <span
-                id="student-subject-error"
-                className="form-error"
-              >
-                {errors.subject}
-              </span>
-            )}
+            {errors.subject && <p className="form-error">{errors.subject}</p>}
           </div>
         </div>
-
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="student-marks">
-              Marks
-            </label>
+            <label htmlFor="marks">Marks</label>
 
             <input
-              id="student-marks"
-              name="marks"
+              id="marks"
               type="number"
+              name="marks"
+              placeholder="0 - 100"
               min="0"
               max="100"
-              placeholder="Enter marks"
               value={formData.marks}
               onChange={handleChange}
-              aria-invalid={Boolean(errors.marks)}
-              aria-describedby={
-                errors.marks
-                  ? "student-marks-error"
-                  : undefined
-              }
             />
 
-            {errors.marks && (
-              <span
-                id="student-marks-error"
-                className="form-error"
-              >
-                {errors.marks}
-              </span>
-            )}
+            {errors.marks && <p className="form-error">{errors.marks}</p>}
           </div>
 
           <div className="form-group">
-            <label htmlFor="student-grade">
-              Grade
-            </label>
+            <label htmlFor="grade">Grade</label>
 
             <select
-              id="student-grade"
+              id="grade"
               name="grade"
               value={formData.grade}
               onChange={handleChange}
-              aria-invalid={Boolean(errors.grade)}
-              aria-describedby={
-                errors.grade
-                  ? "student-grade-error"
-                  : undefined
-              }
             >
-              <option value="">Select grade</option>
               <option value="A+">A+</option>
               <option value="A">A</option>
               <option value="B+">B+</option>
               <option value="B">B</option>
               <option value="C">C</option>
             </select>
-
-            {errors.grade && (
-              <span
-                id="student-grade-error"
-                className="form-error"
-              >
-                {errors.grade}
-              </span>
-            )}
           </div>
         </div>
 
         <div className="form-actions">
           {editingStudent && (
             <button
-              className="secondary-btn"
               type="button"
-              onClick={handleCancel}
+              className="secondary-btn"
+              onClick={() => {
+                onCancelEdit();
+                resetForm();
+              }}
             >
               Cancel
             </button>
           )}
 
-          <button className="primary-btn" type="submit">
-            {editingStudent
-              ? "Update Student"
-              : "Add Student"}
+          <button type="submit" className="primary-btn">
+            {editingStudent ? "Update Student" : "Add Student"}
           </button>
         </div>
       </form>

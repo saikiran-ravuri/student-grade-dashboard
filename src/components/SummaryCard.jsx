@@ -36,14 +36,14 @@ function SummaryCard({ title, value }) {
       <div className="summary-top">
         <div className="summary-icon">{getIcon(title)}</div>
 
-        <div>
+        <div className="summary-content">
           <p className="summary-title">{title}</p>
           <h3 className="summary-value">{value}</h3>
         </div>
       </div>
 
       <div className="summary-footer">
-        <span className="summary-indicator"></span>
+        <span className="summary-dot"></span>
         Live Statistics
       </div>
     </article>

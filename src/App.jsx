@@ -1,13 +1,14 @@
-import "./App.css";
-import Header from "./components/Header";
 import Dashboard from "./components/Dashboard";
+import Header from "./components/Header";
+
+import "./App.css";
 
 function App() {
   return (
-    <main>
+    <div className="app-shell">
       <Header />
       <Dashboard />
-    </main>
+    </div>
   );
 }
 

@@ -1,31 +1,38 @@
 const students = [
   {
-    id: 1,
+    id: crypto.randomUUID(),
     name: "Sudheer Medepalli",
     subject: "Mathematics",
-    marks: 92,
+    marks: 96,
     grade: "A+",
   },
   {
-    id: 2,
+    id: crypto.randomUUID(),
     name: "Vamsi Chigurupati",
     subject: "Physics",
-    marks: 85,
+    marks: 91,
     grade: "A",
   },
   {
-    id: 3,
+    id: crypto.randomUUID(),
     name: "Ganesh Vemulapalli",
     subject: "Chemistry",
-    marks: 76,
+    marks: 86,
     grade: "B+",
   },
   {
-    id: 4,
+    id: crypto.randomUUID(),
+    name: "Manikanta Sidaga",
+    subject: "Sanskrit",
+    marks: 94,
+    grade: "A+",
+  },
+  {
+    id: crypto.randomUUID(),
     name: "Phanee peravarapu",
     subject: "English",
-    marks: 95,
-    grade: "A+",
+    marks: 79,
+    grade: "B",
   },
 ];
 

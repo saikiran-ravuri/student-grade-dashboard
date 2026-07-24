@@ -1,17 +1,16 @@
 .dashboard-header {
   width: min(900px, calc(100% - 40px));
-  margin: 0 auto;
-  padding: 56px 0 64px;
+  margin: 0 auto 52px;
+  padding-top: 42px;
   text-align: center;
 }
 
 .header-badge {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
-  margin-bottom: 20px;
   padding: 8px 16px;
+  margin-bottom: 20px;
   color: #2563eb;
   background: #eff6ff;
   border: 1px solid #dbeafe;
@@ -25,36 +24,37 @@
 .badge-dot {
   width: 7px;
   height: 7px;
-  background: #2563eb;
   border-radius: 50%;
+  background: #2563eb;
   box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
 }
 
 .dashboard-header h1 {
   margin: 0;
   color: #172033;
-  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-size: clamp(3rem, 6vw, 4.4rem);
   font-weight: 800;
   line-height: 1.08;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.06em;
 }
 
 .dashboard-header p {
   max-width: 720px;
-  margin: 20px auto 0;
+  margin: 22px auto 0;
   color: #64748b;
-  font-size: 1.02rem;
-  line-height: 1.8;
+  font-size: 1.05rem;
+  line-height: 1.85;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
   .dashboard-header {
-    width: min(100% - 28px, 900px);
-    padding: 40px 0 48px;
+    width: calc(100% - 28px);
+    margin-bottom: 42px;
+    padding-top: 30px;
   }
 
   .dashboard-header h1 {
-    font-size: 2.35rem;
+    font-size: 2.4rem;
   }
 
   .dashboard-header p {

@@ -1,33 +1,32 @@
 export function getDashboardStats(students) {
-    const totalStudents = students.length;
+  const totalStudents = students.length;
 
-    const totalMarks = students.reduce(
-        (sum, student) => sum + student.marks,
-        0
-    );
+  const totalSubjects = new Set(students.map((student) => student.subject))
+    .size;
 
-    const averageMarks =
-        totalStudents > 0
-            ? Math.round(totalMarks / totalStudents)
-            : 0;
+  const averageMarks =
+    totalStudents === 0
+      ? 0
+      : Math.round(
+          students.reduce((sum, student) => sum + student.marks, 0) /
+            totalStudents,
+        );
 
-    const totalSubjects = new Set(
-        students.map(student => student.subject)
-    ).size;
+  const gradePriority = ["A+", "A", "B+", "B", "C"];
 
-    const highestMarks =
-        totalStudents > 0
-            ? Math.max(...students.map(student => student.marks))
-            : 0;
+  let topGrade = "-";
 
-    const topStudent = students.find(
-        student => student.marks === highestMarks
-    );
+  for (const grade of gradePriority) {
+    if (students.some((student) => student.grade === grade)) {
+      topGrade = grade;
+      break;
+    }
+  }
 
-    return {
-        totalStudents,
-        averageMarks,
-        totalSubjects,
-        topGrade: topStudent ? topStudent.grade : "N/A"
-    };
+  return {
+    totalStudents,
+    averageMarks,
+    totalSubjects,
+    topGrade,
+  };
 }

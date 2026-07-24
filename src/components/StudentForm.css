@@ -1,23 +1,28 @@
 .student-form-section {
-  padding: 28px;
+  padding: 30px;
   background: #ffffff;
   border: 1px solid #e8edf5;
   border-radius: 22px;
-  box-shadow: 0 14px 36px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 14px 38px rgba(15, 23, 42, 0.06);
+  transition: all 0.25s ease;
+}
+
+.student-form-section:hover {
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.09);
 }
 
 .student-form-section h2 {
   margin-bottom: 24px;
   color: #172033;
-  font-size: 2rem;
-  font-weight: 750;
-  letter-spacing: -0.03em;
+  font-size: 1.85rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
 }
 
 .student-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 22px;
 }
 
 .form-row {
@@ -34,7 +39,7 @@
 
 .form-group label {
   color: #334155;
-  font-size: 0.92rem;
+  font-size: .9rem;
   font-weight: 650;
 }
 
@@ -42,13 +47,13 @@
 .form-group select {
   width: 100%;
   height: 48px;
-  padding: 0 14px;
-  color: #1e293b;
-  background: #f8fafc;
+  padding: 0 15px;
   border: 1px solid #dbe3ef;
   border-radius: 12px;
+  background: #f8fafc;
+  color: #172033;
   font: inherit;
-  transition: all 0.2s ease;
+  transition: all .2s ease;
 }
 
 .form-group input::placeholder {
@@ -58,22 +63,29 @@
 .form-group input:hover,
 .form-group select:hover {
   background: #ffffff;
-  border-color: #c3cfdf;
+  border-color: #c4d1e3;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   background: #ffffff;
   border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+  box-shadow: 0 0 0 4px rgba(37,99,235,.10);
   outline: none;
+}
+
+.form-error {
+  margin-top: 2px;
+  color: #dc2626;
+  font-size: .8rem;
+  font-weight: 600;
 }
 
 .form-actions {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .primary-btn,
@@ -82,10 +94,10 @@
   padding: 0 22px;
   border: none;
   border-radius: 12px;
-  font-size: 0.95rem;
+  font-size: .92rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all .2s ease;
 }
 
 .primary-btn {
@@ -107,7 +119,8 @@
   background: #e2e8f0;
 }
 
-@media (max-width: 768px) {
+@media (max-width:768px) {
+
   .student-form-section {
     padding: 22px;
   }

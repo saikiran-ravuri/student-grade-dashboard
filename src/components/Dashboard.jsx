@@ -1,89 +1,218 @@
+import { useState } from "react";
+
 import "./Dashboard.css";
 
-import students from "../data/students";
-
+import initialStudents from "../data/students";
+import StudentForm from "./StudentForm";
 import SummaryCard from "./SummaryCard";
 import StudentRow from "./StudentRow";
-
 import { getDashboardStats } from "../utils/statistics";
 
 function Dashboard() {
+  const [students, setStudents] = useState(initialStudents);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedGrade, setSelectedGrade] = useState("All");
+  const [sortOption, setSortOption] = useState("marks-desc");
 
-    const {
-        totalStudents,
-        averageMarks,
-        totalSubjects,
-        topGrade
-    } = getDashboardStats(students);
+  function handleAddStudent(newStudent) {
+    setStudents((currentStudents) => [
+      ...currentStudents,
+      newStudent,
+    ]);
+  }
 
-    return (
-        <main className="dashboard">
+  const filteredStudents = students.filter((student) => {
+    const normalizedSearch = searchTerm.trim().toLowerCase();
 
-            <section>
+    const matchesSearch =
+      normalizedSearch === "" ||
+      student.name.toLowerCase().includes(normalizedSearch) ||
+      student.subject.toLowerCase().includes(normalizedSearch);
 
-                <h2>Overview</h2>
+    const matchesGrade =
+      selectedGrade === "All" ||
+      student.grade === selectedGrade;
 
-                <div className="summary-container">
+    return matchesSearch && matchesGrade;
+  });
 
-                    <SummaryCard
-                        title="Total Students"
-                        value={totalStudents}
-                    />
+  const sortedStudents = [...filteredStudents].sort(
+    (studentA, studentB) => {
+      switch (sortOption) {
+        case "name-asc":
+          return studentA.name.localeCompare(studentB.name);
 
-                    <SummaryCard
-                        title="Average Marks"
-                        value={`${averageMarks}%`}
-                    />
+        case "name-desc":
+          return studentB.name.localeCompare(studentA.name);
 
-                    <SummaryCard
-                        title="Top Grade"
-                        value={topGrade}
-                    />
+        case "marks-asc":
+          return studentA.marks - studentB.marks;
 
-                    <SummaryCard
-                        title="Subjects"
-                        value={totalSubjects}
-                    />
+        case "marks-desc":
+          return studentB.marks - studentA.marks;
 
-                </div>
+        case "grade-desc": {
+          const gradeOrder = {
+            "A+": 5,
+            A: 4,
+            "B+": 3,
+            B: 2,
+            C: 1,
+          };
 
-            </section>
+          return (
+            (gradeOrder[studentB.grade] ?? 0) -
+            (gradeOrder[studentA.grade] ?? 0)
+          );
+        }
 
-            <section>
+        default:
+          return 0;
+      }
+    }
+  );
 
-                <h2>Students</h2>
+  const {
+    totalStudents,
+    averageMarks,
+    totalSubjects,
+    topGrade,
+  } = getDashboardStats(students);
 
-                <div className="students-section">
+  return (
+    <main className="dashboard">
+      <section className="summary-section">
+        <h2>Overview</h2>
 
-                    {
-                        students.length > 0 ?
+        <div className="summary-container">
+          <SummaryCard
+            title="Total Students"
+            value={totalStudents}
+          />
 
-                            students.map(student => (
+          <SummaryCard
+            title="Average Marks"
+            value={`${averageMarks}%`}
+          />
 
-                                <StudentRow
-                                    key={student.id}
-                                    student={student}
-                                />
+          <SummaryCard
+            title="Top Grade"
+            value={topGrade}
+          />
 
-                            ))
+          <SummaryCard
+            title="Subjects"
+            value={totalSubjects}
+          />
+        </div>
+      </section>
 
-                            :
+      <StudentForm onAddStudent={handleAddStudent} />
 
-                            <p className="empty-message">
+      <section className="students-section-wrapper">
+        <div className="students-section-header">
+          <div>
+            <h2>Students</h2>
 
-                                No students available.
+            <p>
+              Showing {sortedStudents.length} of {students.length} students
+            </p>
+          </div>
 
-                            </p>
+          <div className="controls">
+            <div className="search-box">
+              <label htmlFor="student-search" className="sr-only">
+                Search students
+              </label>
 
-                    }
+              <input
+                id="student-search"
+                type="search"
+                value={searchTerm}
+                onChange={(event) =>
+                  setSearchTerm(event.target.value)
+                }
+                placeholder="Search by name or subject"
+              />
+            </div>
 
-                </div>
+            <div className="filter-box">
+              <label htmlFor="grade-filter" className="sr-only">
+                Filter students by grade
+              </label>
 
-            </section>
+              <select
+                id="grade-filter"
+                value={selectedGrade}
+                onChange={(event) =>
+                  setSelectedGrade(event.target.value)
+                }
+              >
+                <option value="All">All Grades</option>
+                <option value="A+">A+</option>
+                <option value="A">A</option>
+                <option value="B+">B+</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
 
-        </main>
-    );
+            <div className="filter-box sort-box">
+              <label htmlFor="student-sort" className="sr-only">
+                Sort students
+              </label>
 
+              <select
+                id="student-sort"
+                value={sortOption}
+                onChange={(event) =>
+                  setSortOption(event.target.value)
+                }
+              >
+                <option value="marks-desc">
+                  Marks: High to Low
+                </option>
+
+                <option value="marks-asc">
+                  Marks: Low to High
+                </option>
+
+                <option value="name-asc">
+                  Name: A to Z
+                </option>
+
+                <option value="name-desc">
+                  Name: Z to A
+                </option>
+
+                <option value="grade-desc">
+                  Grade: Highest First
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div className="students-section">
+          {sortedStudents.length > 0 ? (
+            sortedStudents.map((student) => (
+              <StudentRow
+                key={student.id}
+                student={student}
+              />
+            ))
+          ) : (
+            <div className="empty-message">
+              <h3>No students found</h3>
+              <p>
+                Try changing the search text or selected grade.
+              </p>
+            </div>
+          )}
+        </div>
+      </section>
+    </main>
+  );
 }
 
 export default Dashboard;

@@ -1,5 +1,6 @@
 import { useState } from "react";
 
+import { calculateGrade } from "../utils/grade";
 import "./StudentForm.css";
 
 function createInitialForm() {
@@ -8,7 +9,6 @@ function createInitialForm() {
     name: "",
     subject: "",
     marks: "",
-    grade: "A",
   };
 }
 
@@ -28,6 +28,9 @@ function StudentForm({
   );
 
   const [errors, setErrors] = useState({});
+
+  const calculatedGrade =
+    formData.marks === "" ? "" : calculateGrade(formData.marks);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -85,9 +88,12 @@ function StudentForm({
       return;
     }
 
+    const numericMarks = Number(formData.marks);
+
     const student = {
       ...formData,
-      marks: Number(formData.marks),
+      marks: numericMarks,
+      grade: calculateGrade(numericMarks),
     };
 
     if (editingStudent) {
@@ -96,6 +102,11 @@ function StudentForm({
       onAddStudent(student);
     }
 
+    resetForm();
+  }
+
+  function handleCancelEdit() {
+    onCancelEdit();
     resetForm();
   }
 
@@ -135,6 +146,7 @@ function StudentForm({
             {errors.subject && <p className="form-error">{errors.subject}</p>}
           </div>
         </div>
+
         <div className="form-row">
           <div className="form-group">
             <label htmlFor="marks">Marks</label>
@@ -156,18 +168,14 @@ function StudentForm({
           <div className="form-group">
             <label htmlFor="grade">Grade</label>
 
-            <select
+            <input
               id="grade"
-              name="grade"
-              value={formData.grade}
-              onChange={handleChange}
-            >
-              <option value="A+">A+</option>
-              <option value="A">A</option>
-              <option value="B+">B+</option>
-              <option value="B">B</option>
-              <option value="C">C</option>
-            </select>
+              type="text"
+              value={calculatedGrade}
+              placeholder="Calculated automatically"
+              readOnly
+              aria-label="Automatically calculated grade"
+            />
           </div>
         </div>
 
@@ -176,10 +184,7 @@ function StudentForm({
             <button
               type="button"
               className="secondary-btn"
-              onClick={() => {
-                onCancelEdit();
-                resetForm();
-              }}
+              onClick={handleCancelEdit}
             >
               Cancel
             </button>

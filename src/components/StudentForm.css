@@ -39,7 +39,7 @@
 
 .form-group label {
   color: #334155;
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 650;
 }
 
@@ -53,7 +53,7 @@
   background: #f8fafc;
   color: #172033;
   font: inherit;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .form-group input::placeholder {
@@ -70,14 +70,34 @@
 .form-group select:focus {
   background: #ffffff;
   border-color: #2563eb;
-  box-shadow: 0 0 0 4px rgba(37,99,235,.10);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
   outline: none;
+}
+
+/* Auto-calculated Grade Field */
+.form-group input[readonly] {
+  background: #f1f5f9;
+  border-color: #dbe3ef;
+  color: #475569;
+  font-weight: 600;
+  cursor: default;
+}
+
+.form-group input[readonly]:hover {
+  background: #f1f5f9;
+  border-color: #dbe3ef;
+}
+
+.form-group input[readonly]:focus {
+  background: #f1f5f9;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
 }
 
 .form-error {
   margin-top: 2px;
   color: #dc2626;
-  font-size: .8rem;
+  font-size: 0.8rem;
   font-weight: 600;
 }
 
@@ -94,14 +114,14 @@
   padding: 0 22px;
   border: none;
   border-radius: 12px;
-  font-size: .92rem;
+  font-size: 0.92rem;
   font-weight: 700;
   cursor: pointer;
-  transition: all .2s ease;
+  transition: all 0.2s ease;
 }
 
 .primary-btn {
-  color: #fff;
+  color: #ffffff;
   background: #2563eb;
 }
 
@@ -119,8 +139,7 @@
   background: #e2e8f0;
 }
 
-@media (max-width:768px) {
-
+@media (max-width: 768px) {
   .student-form-section {
     padding: 22px;
   }
